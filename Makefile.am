@@ -21,6 +21,7 @@ SUBDIRS = . scripts doc mirrors motds src
 CONFFILES = \
 etc/motd \
 etc/motd.sh \
+etc/motd-playstore \
 etc/profile.d/init-termux-properties.sh \
 etc/termux-login.sh
 

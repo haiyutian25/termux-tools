@@ -22,7 +22,9 @@
 #      motd message with escape sequences, optionally with a terminal logo.
 #   2. motd: A static motd that is just read as is with cat and displayed.
 
-sysconf_DATA = motd.sh motd
+# The motd-playstore is an additional motd that will only be displayed
+# if the termux-app version is very old (like the version found on playstore)
+sysconf_DATA = motd.sh motd motd-playstore
 
 CLEANFILES = motd.sh motd
 
@@ -41,21 +43,29 @@ $(eval $(call process-rule,motd.sh))
 motd:
 	@echo "Creating motd file"
 
-	@echo "Termux 版本：${TERMUX_VERSION}" > motd
+	@echo "Welcome to Termux!" > motd
 	@echo "" >> motd
-	@echo "软件包管理：" >> motd
+	@echo "Docs:       https://termux.dev/docs" >> motd
+	@echo "Donate:     https://termux.dev/donate" >> motd
+	@echo "Community:  https://termux.dev/community" >> motd
+
 	@echo "" >> motd
-	@echo " - 搜索：  pkg search <查询>" >> motd
-	@echo " - 安装：  pkg install <软件包>" >> motd
-	@echo " - 升级：  pkg upgrade" >> motd
+	@echo "Working with packages:" >> motd
+	@echo "" >> motd
+	@echo " - Search:  pkg search <query>" >> motd
+	@echo " - Install: pkg install <package>" >> motd
+	@echo " - Upgrade: pkg upgrade" >> motd
 
     ifeq ($(TERMUX_PACKAGE_MANAGER),apt)
 		@echo "" >> motd
-		@echo "订阅额外的软件仓库：" >> motd
+		@echo "Subscribing to additional repositories:" >> motd
 		@echo "" >> motd
-		@echo " - Root：   pkg install root-repo" >> motd
-		@echo " - X11：    pkg install x11-repo" >> motd
+		@echo " - Root:    pkg install root-repo" >> motd
+		@echo " - X11:     pkg install x11-repo" >> motd
 		@echo "" >> motd
-		@echo "如需修复软件仓库问题，" >> motd
-		@echo "请尝试 'termux-change-repo' 命令。" >> motd
+		@echo "For fixing any repository issues," >> motd
+		@echo "try 'termux-change-repo' command." >> motd
     endif
+
+	@echo "" >> motd
+	@echo "Report issues at https://termux.dev/issues" >> motd
